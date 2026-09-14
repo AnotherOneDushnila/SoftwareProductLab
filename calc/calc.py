@@ -32,7 +32,7 @@ class Calculator:
 
 
     def _complex_square_root(self, input: str) -> list[complex]: # эта штука нужна во первых для того, чтобы можно было легко и непринужденно поменять степень корня
-        res = []
+        res = []                                                 # а во вторых потому, что библиотечные функции зачасутю возвращают не два корня, а так называемый главный корень
         z = complex(input.replace(' ', '').replace('i', 'j'))
         r = (z.real**2 + z.imag**2)**(1/2)
         angle = phase(z)

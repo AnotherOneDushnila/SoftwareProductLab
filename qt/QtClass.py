@@ -25,10 +25,14 @@ class MyWidget(QMainWindow):
         main_layout.addWidget(self.input_label)
 
         self.input_fielf = QLineEdit() # Поле ввода
+        self.input_fielf.setMinimumHeight(50) # Минимальная высота окошка ввода
+        self.input_fielf.setStyleSheet('font-size: 13pt') # Размер шрифта в плейсхолдере
         self.input_fielf.setPlaceholderText('Enter a number')
         main_layout.addWidget(self.input_fielf)
 
         self.calc_button = QPushButton("Push to calculate") # Кнопка рассчета (привязана к методу calculate)
+        self.calc_button.setStyleSheet('font-size: 11pt')
+        self.calc_button.setMinimumHeight(40)
         self.calc_button.clicked.connect(self.calculate)
         main_layout.addWidget(self.calc_button)
 
