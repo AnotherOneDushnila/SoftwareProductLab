@@ -37,10 +37,12 @@ class MyWidget(QMainWindow):
         main_layout.addWidget(self.calc_button)
 
         self.output_label = QLabel("Result:") 
+        self.output_label.setStyleSheet('font-size: 11pt')
         main_layout.addWidget(self.output_label)
 
         self.result_field = QTextEdit() # Поле для вывода результата
         self.result_field.setReadOnly(True)
+        self.result_field.setStyleSheet('font-size: 12pt')
         main_layout.addWidget(self.result_field)
 
         niz_layout = QHBoxLayout()
