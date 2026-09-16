@@ -53,7 +53,8 @@ class MyWidget(QMainWindow):
         self.lang_box.addItems([
             "English",
             "Русский",
-            "Español"
+            "Español",
+            "中國人"
         ])
 
         self.lang_box.currentIndexChanged.connect(self.change_lang)
@@ -81,26 +82,36 @@ class MyWidget(QMainWindow):
             self.calc_button.setText(LOCALS['eng']['StartButtonMessage'])
             self.output_label.setText(LOCALS['eng']['resultMessage'])
             self.language_label.setText(LOCALS['eng']['LangMenu'])
+            self.input_fielf.setPlaceholderText(LOCALS['eng']['Spaceholder'])
         elif ind == 1:
             self.input_label.setText(LOCALS['ru']['inputMessage'])
             self.calc_button.setText(LOCALS['ru']['StartButtonMessage'])
             self.output_label.setText(LOCALS['ru']['resultMessage'])
             self.language_label.setText(LOCALS['ru']['LangMenu'])
+            self.input_fielf.setPlaceholderText(LOCALS['ru']['Spaceholder'])
         elif ind == 2:
             self.input_label.setText(LOCALS['sp']['inputMessage'])
             self.calc_button.setText(LOCALS['sp']['StartButtonMessage'])
             self.output_label.setText(LOCALS['sp']['resultMessage'])
             self.language_label.setText(LOCALS['sp']['LangMenu'])
+            self.input_fielf.setPlaceholderText(LOCALS['sp']['Spaceholder'])
+        elif ind == 3:
+            self.input_label.setText(LOCALS['中國人']['inputMessage'])
+            self.calc_button.setText(LOCALS['中國人']['StartButtonMessage'])
+            self.output_label.setText(LOCALS['中國人']['resultMessage'])
+            self.language_label.setText(LOCALS['中國人']['LangMenu'])
+            self.input_fielf.setPlaceholderText(LOCALS['中國人']['Spaceholder'])
         else:
             raise ValueError("Invalid language index.")
 
 
     def format_out(self, res, num_type: str) -> str: # колхоз для удобочитаемого вывода резов
+        # TODO: перевод формата вывода
         if len(res) != 0:
             if num_type == 'complex' or num_type == 'negative':
                 n1, n2 = str(res[0])[1:-1], str(res[1])[1:-1]
-                return f"{n1}\n{n2}"
+                return f"Первый Корень:  {n1}\nВторой корень:  {n2}"
             else:
-                return f"{res[0]}\n{res[1]}"
+                return f"Первый Корень:  {res[0]}\nВторой корень:  {res[1]}"
         else:
             return "No roots found!"
