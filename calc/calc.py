@@ -18,8 +18,8 @@ class Calculator:
         if self.precision < 0:
             raise ValueError('Precision must be an integer >= 0!')
         if str(abs(int(pow))).isdigit():
-            pow = int(pow)
-            if pow <= 0:
+            self.pow = int(self.pow)
+            if self.pow <= 0:
                 raise ValueError('Root degree must be > 0!')
         else:
             raise ValueError('Root degree must be an integer!')
