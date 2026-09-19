@@ -49,7 +49,7 @@ class MyWidget(QMainWindow):
 
         main_layout.addLayout(verh_layout)
         
-        self.input_label = QLabel()
+        self.input_label = QLabel('Root calculator')
         main_layout.addWidget(self.input_label)
 
         self.input_fielf = QLineEdit() # Поле ввода
@@ -58,7 +58,7 @@ class MyWidget(QMainWindow):
         self.input_fielf.setPlaceholderText('Enter a number')
         main_layout.addWidget(self.input_fielf)
 
-        self.calc_button = QPushButton("Push to calculate") # Кнопка рассчета (привязана к методу calculate)
+        self.calc_button = QPushButton("Calculation") # Кнопка рассчета (привязана к методу calculate)
         self.calc_button.setStyleSheet('font-size: 11pt')
         self.calc_button.setMinimumHeight(40)
         self.calc_button.clicked.connect(self.calculate)
@@ -102,16 +102,20 @@ class MyWidget(QMainWindow):
         if not text:
             self.result_field.setText(LOCALS[self.start_lang]['ResultFieldEx']) # заколхозил язык в аттрибут)
             return None
-        if self.precision_input.text():
-            if Pow:
-                c = Calculator(text, Pow, self.precision_input.text())
+        try:
+            if self.precision_input.text():
+                if Pow:
+                    c = Calculator(text, Pow, self.precision_input.text())
+                else:
+                    c = Calculator(text, precision=self.precision_input.text())
             else:
-                c = Calculator(text, precision=self.precision_input.text())
-        else:
-            if Pow:
-                c = Calculator(text, Pow)
-            else:
-                c = Calculator(text)
+                if Pow:
+                    c = Calculator(text, Pow)
+                else:
+                    c = Calculator(text)
+        except ValueError as error:
+            self.result_field.setText(str(error))
+            return
 
         res = c.calculate()
         self.result_field.setText(self.format_out(res))

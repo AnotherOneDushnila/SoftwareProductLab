@@ -1,7 +1,7 @@
 LOCALS = {
     'ru' : {
-        'inputMessage' : 'Калькулятор квадратных корней',
-        'StartButtonMessage' : 'Рассчет',
+        'inputMessage' : 'Калькулятор корней',
+        'StartButtonMessage' : 'Расчет',
         'resultMessage' : 'Результат:',
         'LangMenu' : 'Выбрать язык интерфейса',
         'Spaceholder' : 'Введите число',
@@ -16,7 +16,7 @@ LOCALS = {
     },
 
     'eng' : {
-        'inputMessage' : 'Square root calculator',
+        'inputMessage' : 'Root calculator',
         'StartButtonMessage' : 'Calculation',
         'resultMessage' : 'Result:',
         'LangMenu' : 'Select interface language',
@@ -32,7 +32,7 @@ LOCALS = {
     },
 
     'sp' : {
-        'inputMessage' : 'Calculadora de raíces cuadradas',
+        'inputMessage' : 'Calculadora de raíces',
         'StartButtonMessage' : 'Cálculo',
         'resultMessage' : 'Resultado:',
         'LangMenu' : 'Seleccionar el idioma de la interfaz',

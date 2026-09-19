@@ -14,7 +14,15 @@ class Calculator:
     def __init__(self, input: str, pow: str = '2', precision: str = '10') -> None:
         self.input = input.strip()
         self.precision = int(precision)
-        self.pow = int(pow)
+
+        if self.precision < 0:
+            raise ValueError('Precision must be an integer >= 0!')
+        if str(abs(int(pow))).isdigit():
+            pow = int(pow)
+            if pow <= 0:
+                raise ValueError('Root degree must be > 0!')
+        else:
+            raise ValueError('Root degree must be an integer!')
 
 
     def calculate(self) -> list:
