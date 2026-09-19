@@ -5,6 +5,14 @@ LOCALS = {
         'resultMessage' : 'Результат:',
         'LangMenu' : 'Выбрать язык интерфейса',
         'Spaceholder' : 'Введите число',
+        'ResultFieldEx' : 'Пожалуйста, введите число!',
+        'OneRoot' : 'Корень',
+        'FRoot' : 'Первый корень: ',
+        'SecRoot' : 'Второй корень: ',
+        'NoRoots' : 'Нет корней.',
+        'Precision' : 'Точность рассчета',
+        'Pow' : 'Степень корня:',
+        'Help' : 'Поддержка'
     },
 
     'eng' : {
@@ -13,6 +21,14 @@ LOCALS = {
         'resultMessage' : 'Result:',
         'LangMenu' : 'Select interface language',
         'Spaceholder' : 'Enter the number',
+        'ResultFieldEx' : 'Please, enter a number!',
+        'OneRoot': 'Root',
+        'FRoot' : 'First root: ',
+        'SecRoot' : 'Second root: ',
+        'NoRoots' : 'No roots found.',
+        'Precision' : 'Precision',
+        'Pow' : 'Root degree:',
+        'Help' : 'Support'
     },
 
     'sp' : {
@@ -21,6 +37,14 @@ LOCALS = {
         'resultMessage' : 'Resultado:',
         'LangMenu' : 'Seleccionar el idioma de la interfaz',
         'Spaceholder' : 'Introduce un número',
+        'ResultFieldEx' : 'Por favor, introduzca un número!',
+        'OneRoot' : 'Raíz',
+        'FRoot' : 'Primera raíz: ',
+        'SecRoot' : 'Segunda raíz: ',
+        'NoRoots' : 'Sin raíces.',
+        'Precision' : 'Precisión',
+        'Pow' : 'Grado de la raíz:',
+        'Help' : 'Apoyo'
     },
 
     '中國人' : {
@@ -29,5 +53,13 @@ LOCALS = {
         'resultMessage' : '結果：',
         'LangMenu' : '選擇介面語言',
         'Spaceholder' : '輸入一個數字',
+        'ResultFieldEx' : '請輸入一個數字。!',
+        'OneRoot': '方程式的根',
+        'FRoot' : '方程式的第一個根: ',
+        'SecRoot' : '此方程式的第二個根: ',
+        'NoRoots' : '此方程式沒有根。.',
+        'Precision' : '計算精度',
+        'Pow' : '根的次數:',
+        'Help' : '支援'
     },
 }

@@ -1,56 +1,81 @@
 from math import cos, sin, pi
 from cmath import phase
+from sympy import I
+from sympy.core.sympify import *
+from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
+from typing import Any
+
+
+transformations = standard_transformations + (implicit_multiplication_application, convert_xor)
+
 
 class Calculator:
 
-    status: str
-
-    def __init__(self, input: str) -> None:
+    def __init__(self, input: str, pow: str = '2', precision: str = '10') -> None:
         self.input = input.strip()
-        self._analyze_input()
+        self.precision = int(precision)
+        self.pow = int(pow)
 
 
-    def calculate(self):
-        if self.status == 'complex':
-            return self._complex_square_root(self.input)
-        elif self.status == 'positive':
-            return self._basic_square_root(self.input)
-        elif self.status == 'negative':
-            return self._negative_root(self.input)
+    def calculate(self) -> list:
+        num = self._parse_exp()
+
+        if num is None:
+            return 'Calculation impossible!'
+        elif type(num) == complex:
+            return self._complex_root(num, self.pow)
+        elif num < 0:
+            return self._negative_root(num, self.pow)
+        elif num > 0:
+            return self._basic_root(num, self.pow)
+        elif num == 0:
+            return [0]
+        else:
+            raise ValueError()
 
 
-    def _basic_square_root(self, input: str) -> tuple[float]:
-        number = float(input)
+    def _basic_root(self, input: float, pow: int = 2) -> list[float]:
+        basic_root = round(input ** (1/pow), self.precision)
 
-        return number ** (1/2), -(number**(1/2))
-
-
-    def _negative_root(self, input: str) -> tuple[complex]:
-        number = complex(input)
-
-        return number ** (1/2), -(number ** (1/2))
+        if pow % 2 == 0:
+            return [basic_root, -basic_root]
+        return [basic_root]
 
 
-    def _complex_square_root(self, input: str) -> list[complex]: # эта штука нужна во первых для того, чтобы можно было легко и непринужденно поменять степень корня
-        res = []                                                 # а во вторых потому, что библиотечные функции зачасутю возвращают не два корня, а так называемый главный корень
-        z = complex(input.replace(' ', '').replace('i', 'j'))
-        r = (z.real**2 + z.imag**2)**(1/2)
-        angle = phase(z)
+    def _negative_root(self, input: float, pow: int = 2) -> list:
+        if pow % 2 == 0:
+            return self._complex_root(complex(input), pow)
+        return [round(-((-input) ** (1 / pow)), self.precision)]
 
-        for k in range(2):
-            root = (r ** (1/2)) * (cos((angle + 2 * pi * k) / 2) + 1j * sin((angle + 2 * pi * k) / 2))
-            res.append(root)
+
+    def _complex_root(self, input: complex, pow: int = 2) -> list[str]: 
+        res = []
+        r = (input.real**2 + input.imag**2)**(1/2)
+        angle = phase(input)
+
+        for k in range(pow):
+            root = complex((r ** (1/pow)) * (cos((angle + 2 * pi * k) / pow) + 1j * sin((angle + 2 * pi * k) / pow)))
+            real = round(root.real, self.precision)
+            imag = round(root.imag, self.precision)
+
+            if real == 0:
+                res.append(f'{imag:+g}i')
+            elif imag == 0:
+                res.append(f'{real:g}')
+            else:
+                res.append(f"{real:g}{imag:+g}i")
 
         return res
 
-    def _analyze_input(self) -> None:
-        if 'i' in self.input or 'j' in self.input:
-            self.status = 'complex'
 
+    def _parse_exp(self) -> Any:
+        if all(sym in '0123456789.+-*/^() iIjJ' for sym in self.input): # никаких буков
+            exp = self.input.replace('i', 'I').replace('j', 'I')
+            res = parse_expr(exp, local_dict={'I': I}, transformations=transformations)
+
+            if res.is_real:
+                return float(res)
+            return complex(res)
         else:
-            number = float(self.input)
+            return None
 
-            if number < 0:
-                self.status = 'negative'
-            else:
-                self.status = 'positive'
