@@ -11,3 +11,4 @@ pip install -r "requirements.txt"
 Calc - тут все вычисления  
 Qt - по идее сюда графическую оболочку положим  
 Tests - папка с тестами
+main.py - точка входа

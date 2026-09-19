@@ -69,8 +69,8 @@ class Calculator:
 
 
     def _parse_exp(self) -> Any:
-        if all(sym in '0123456789.+-*/^() iIjJ' for sym in self.input): # никаких буков
-            exp = self.input.replace('i', 'I').replace('j', 'I')
+        if all(sym in '0123456789.,+-*/^() iIjJ' for sym in self.input): # никаких буков
+            exp = self.input.replace('i', 'I').replace('j', 'I').replace(',', '.')
             res = parse_expr(exp, local_dict={'I': I}, transformations=transformations)
 
             if res.is_real:
