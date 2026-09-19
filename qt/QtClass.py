@@ -41,7 +41,7 @@ class MyWidget(QMainWindow):
 
         verh_layout.addStretch()
 
-        self.help_button = QPushButton('Help')
+        self.help_button = QPushButton('Support')
         self.help_button.setStyleSheet('font-size: 13pt')
         self.help_button.setMaximumWidth(120)
         self.help_button.clicked.connect(self.create_subwindow)
