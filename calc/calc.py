@@ -26,7 +26,7 @@ class Calculator:
         try:
             self.pow = int(pow)
         except (ValueError, TypeError):
-            raise ValueError('Precision must be an integer!')
+            raise ValueError('Root degree must be an integer!')
         
         if self.pow <= 0:
             raise ValueError('Root degree must be > 0!')
