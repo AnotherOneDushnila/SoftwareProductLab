@@ -28,8 +28,8 @@ class Calculator:
         except (ValueError, TypeError):
             raise ValueError('Root degree must be an integer!')
         
-        if self.pow <= 0:
-            raise ValueError('Root degree must be > 0!')
+        if self.pow <= 1:
+            raise ValueError('Root degree must be > 1!')
 
 
     def calculate(self) -> list:
