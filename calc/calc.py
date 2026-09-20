@@ -24,7 +24,7 @@ class Calculator:
 
         
         try:
-            self.precision = int(precision)
+            self.pow = int(pow)
         except (ValueError, TypeError):
             raise ValueError('Precision must be an integer!')
         
