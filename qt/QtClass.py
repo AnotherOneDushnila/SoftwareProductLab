@@ -117,8 +117,11 @@ class MyWidget(QMainWindow):
             self.result_field.setText(str(error))
             return
 
-        res = c.calculate()
-        self.result_field.setText(self.format_out(res))
+        try:
+            res = c.calculate()
+            self.result_field.setText(self.format_out(res))
+        except Exception as e:
+            self.result_field.setText(str(e))
 
 
 

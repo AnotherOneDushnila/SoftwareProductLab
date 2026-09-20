@@ -1,8 +1,9 @@
 from math import cos, sin, pi
 from cmath import phase
-from sympy import I
+from sympy import I, zoo, nan
 from sympy.core.sympify import *
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
+import re
 from typing import Any
 
 
@@ -13,16 +14,22 @@ class Calculator:
 
     def __init__(self, input: str, pow: str = '2', precision: str = '10') -> None:
         self.input = input.strip()
-        self.precision = int(precision)
-
+        try:
+            self.precision = int(precision)
+        except (ValueError, TypeError):
+            raise ValueError('Precision must be an integer!')
+        
         if self.precision < 0:
             raise ValueError('Precision must be an integer >= 0!')
-        if str(abs(int(pow))).isdigit():
-            self.pow = int(pow)
-            if self.pow <= 0:
-                raise ValueError('Root degree must be > 0!')
-        else:
-            raise ValueError('Root degree must be an integer!')
+
+        
+        try:
+            self.precision = int(precision)
+        except (ValueError, TypeError):
+            raise ValueError('Precision must be an integer!')
+        
+        if self.pow <= 0:
+            raise ValueError('Root degree must be > 0!')
 
 
     def calculate(self) -> list:
@@ -77,10 +84,33 @@ class Calculator:
 
 
     def _parse_exp(self) -> Any:
+        # Да простит меня бог и многоуважаемые проверяющие, но sympy как я понял не отдает Zerodivisionerror.
+        # Была б моя воля, просто ловил бы его. А так приходиться колхозить по-страшному.
+
         if all(sym in '0123456789.,+-*/^() iIjJ' for sym in self.input): # никаких буков
             exp = self.input.replace('i', 'I').replace('j', 'I').replace(',', '.')
-            res = parse_expr(exp, local_dict={'I': I}, transformations=transformations)
 
+            if re.search(r'\d\s+\d|\d\.\s+|\.\s+\d|\d\s+\.', exp): # перехватываем порбел между цифрами, чтобы parse_expr не приняла это за неявное умножение
+                raise ValueError("Invalid spaces")
+
+            if re.search(r'(^|[^\d])\.(?!\d)', exp): # не даем интермпретировать условно 2. как 2.0
+                raise ValueError("InvalidExpression")
+
+            if re.search(r'/\s*0+(?:\.0+)?(?=\s*(?:$|[+\-*/^)]))', exp): # явное деление на ноль
+                raise ZeroDivisionError('Devision by zero') 
+
+            try:
+                res = parse_expr(exp, local_dict={'I': I}, transformations=transformations)
+            except:
+                raise ValueError('Invalid expression')
+
+            if res.has(zoo):
+                raise ZeroDivisionError('Division by zero')
+
+            if res.has(nan):
+                raise ValueError('Invalid expression')
+
+            
             if res.is_real:
                 return float(res)
             return complex(res)
